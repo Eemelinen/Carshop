@@ -47,6 +47,18 @@ function Carlist() {
     .catch(err => console.log(err));
   }
 
+  const saveCar = car => {
+    fetch('https://carstockrest.herokuapp.com/cars', {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(car)
+    })
+    .then(res => fetchData())
+    .catch(err => console.log(err))
+  }
+
   const columns = [
     {
       Header: 'Brand',
@@ -88,7 +100,7 @@ function Carlist() {
             Car succesfully deleted.
           </Alert>
       </Snackbar>
-      <AddCar />
+      <AddCar saveCar={saveCar}/>
       <ReactTable filterable={true} data={cars} columns={columns}/>
     </div>
   );

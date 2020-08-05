@@ -7,17 +7,32 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-const AddCar = () => {
+const AddCar = props => {
   
   const [open, setOpen] = React.useState(false);
+  const [car, setCar] = React.useState({
+    brand: '', model: '', color: '', fuel: '', year: '', price: ''
+  })
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+  const handleInputChange = (e) => {
+    setCar({
+      ...car,
+      [e.target.name]: e.target.value,
+    })
+  }
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  const saveCar = () => {
+    props.saveCar(car);
+    handleClose();
+  }
 
   return (
     <div>
@@ -31,11 +46,51 @@ const AddCar = () => {
             Add new car.
           </DialogContentText>
           <TextField
-            autoFocus
             margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
+            name='brand'
+            label="brand"
+            value={car.brand}
+            onChange={e => handleInputChange(e)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            name='model'
+            label="model"
+            value={car.model}
+            onChange={e => handleInputChange(e)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            name='color'
+            label="color"
+            value={car.color}
+            onChange={e => handleInputChange(e)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            name='fuel'
+            label="fuel"
+            value={car.fuel}
+            onChange={e => handleInputChange(e)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            name='year'
+            label="year"
+            value={car.year}
+            onChange={e => handleInputChange(e)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            name='price'
+            label="price"
+            value={car.price}
+            onChange={e => handleInputChange(e)}
             fullWidth
           />
         </DialogContent>
@@ -43,7 +98,7 @@ const AddCar = () => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={saveCar} color="primary">
             Save
           </Button>
         </DialogActions>
