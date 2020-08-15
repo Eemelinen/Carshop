@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import AddCar from './AddCar';
+import EditCar from './EditCar';
 
 // import './Carlist.css';
 
@@ -59,6 +60,18 @@ function Carlist() {
     .catch(err => console.log(err))
   }
 
+  const updateCar = (car, link) => {
+    fetch(link, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(car)
+    })
+    .then(res => fetchData())
+    .catch(err => console.log(err));
+  }
+
   const columns = [
     {
       Header: 'Brand',
@@ -83,6 +96,12 @@ function Carlist() {
     {
       Header: 'Price',
       accessor: 'price'
+    },
+    {
+      width: 100,
+      sortable: false,
+      filterable: false,
+      Cell: row => <EditCar car={row.original} updateCar={updateCar}>Edit</EditCar>
     },
     {
       width: 100,
